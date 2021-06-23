@@ -25,12 +25,12 @@ class TestPub(unittest.TestCase):
 
     def test_pub_has_drinks(self):
         self.pub.add_drink(self.drink)
-        self.assertEqual(1,len(self.pub.drinks))
+        self.assertEqual(1, self.pub.stock_count(self.drink))
     
     def test_pub_can_sell_drinks(self):
         self.pub.add_drink(self.drink)
         self.pub.reduce_drink(self.drink)
-        self.assertEqual(0,len(self.pub.drinks))
+        self.assertEqual(0,self.pub.stock_count(self.drink))
     
     def test_reduced_customer_wallet(self):
         self.customer.reduce_wallet(self.drink.price)
@@ -46,7 +46,7 @@ class TestPub(unittest.TestCase):
         self.pub.customer_buys_drink(self.drink, self.customer)
         self.assertEqual(102, self.pub.till)
         self.assertEqual(18, self.customer.wallet)
-        self.assertEqual(0, len(self.pub.drinks))
+        self.assertEqual(0, self.pub.stock_count(self.drink))
     
     def test_check_cust_age__True(self):
         self.assertEqual(True, self.pub.check_cust_age(self.customer))
@@ -59,7 +59,7 @@ class TestPub(unittest.TestCase):
         self.pub.customer_buys_drink(self.drink, self.customer2)
         self.assertEqual(100, self.pub.till)
         self.assertEqual(50, self.customer2.wallet)
-        self.assertEqual(1, len(self.pub.drinks))
+        self.assertEqual(1, self.pub.stock_count(self.drink))
     
     def test_customer_gets_drunk(self):
         self.customer.drunk_customer(self.drink)
@@ -77,6 +77,6 @@ class TestPub(unittest.TestCase):
         self.pub.customer_buys_food(self.customer, self.food)
         self.assertEqual(103, self.pub.till)
         self.assertEqual(17, self.customer.wallet)
-        self.assertEqual(0, len(self.pub.drinks))
+        self.assertEqual(0, self.pub.stock_count(self.drink))
         self.assertEqual(0, len(self.pub.food))
 
